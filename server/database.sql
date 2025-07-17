@@ -1,0 +1,39 @@
+CREATE DATABASE blogsite;
+
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE posts (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
+    title VARCHAR(200) NOT NULL,
+    cover_image TEXT, 
+    content JSONB NOT NULL, 
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE comments (
+    id SERIAL PRIMARY KEY,
+    post_id INTEGER REFERENCES posts(id) ON DELETE CASCADE,
+    name VARCHAR(100) NOT NULL, 
+    email VARCHAR(150), 
+    rating INTEGER CHECK (rating BETWEEN 1 AND 5),
+    text TEXT,
+    image_url TEXT, 
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+CREATE TABLE images (
+    id SERIAL PRIMARY KEY,
+    url TEXT NOT NULL,
+    caption TEXT,
+    uploaded_by INTEGER REFERENCES users(id),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
