@@ -1,0 +1,71 @@
+.editor-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  background-color: #fff;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 1rem;
+  justify-content: center;
+}
+
+.toolbar button {
+  padding: 6px 10px;
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.toolbar button:hover {
+  background-color: #e2e6ea;
+}
+
+.editor-content {
+  min-height: 300px;
+  padding: 1rem;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  outline: none;
+  font-size: 1rem;
+  line-height: 1.6;
+  font-family: 'Segoe UI', sans-serif;
+  color: #212529;
+  cursor: text;
+}
+
+/* Paragraf boşlukları */
+.editor-content p {
+  margin: 1rem 0;
+}
+
+/* Cursor görünürlüğü */
+.ProseMirror-focused {
+  outline: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .editor-container {
+    margin: 1rem;
+    padding: 0.75rem;
+  }
+
+  .toolbar {
+    gap: 6px;
+  }
+
+  .toolbar button {
+    padding: 4px 8px;
+    font-size: 0.85rem;
+  }
+}

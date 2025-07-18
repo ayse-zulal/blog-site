@@ -41,17 +41,26 @@ router.get('/:id', async (req, res) => {
 
 // create a new post
 router.post('/', async (req, res) => {
-    const { title, content } = req.body;
-    try {
-        const result = await pool.query(
-            'INSERT INTO posts (title, content) VALUES ($1, $2) RETURNING *',
-            [title, content]
-        );
-        res.status(201).json(result.rows[0]);
-    } catch (error) {
-        console.error('Error creating post:', error);
-        res.status(500).json({ error: 'Internal server error' });
-    }
+  const client = await pool.connect();
+  try {
+    console.log('Creating post with data:', req.body);
+    const { title, category, content, cover_image, user_id } = req.body;
+    console.log(title, category, content, cover_image, user_id);
+
+    const result = await client.query(
+      `INSERT INTO posts (title, category, content, cover_image, user_id)
+       VALUES ($1, $2, $3, $4, $5)
+       RETURNING *`,
+      [title, category, content, cover_image, user_id]
+    );
+
+    res.status(201).json({ post: result.rows[0] });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Post oluşturulamadı' });
+  } finally {
+    client.release();
+  }
 });
 
 // update a post
